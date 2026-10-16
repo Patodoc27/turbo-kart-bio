@@ -648,10 +648,10 @@ ISLANDS.forEach(I => I.levels.forEach((L,l) => { L.dur = [45,60,70][l]; }));
 
 const KARTS = [
   { name:'Rayo',      img:'red',    body:'#e63946', speed:3, accel:3, steer:3, sm:1.00, am:1.00, tm:1.00 },
-  { name:'Trueno',    img:'blue',   body:'#1d6fd4', speed:5, accel:2, steer:2, sm:1.10, am:0.85, tm:0.90 },
-  { name:'Relámpago', img:'yellow', body:'#e09a00', speed:2, accel:5, steer:3, sm:0.92, am:1.30, tm:1.00 },
-  { name:'Tornado',   img:'green',  body:'#2a9d5c', speed:3, accel:3, steer:5, sm:1.00, am:1.00, tm:1.35 },
-  { name:'Cometa',    img:'purple', body:'#8e44ad', speed:4, accel:4, steer:3, sm:1.06, am:1.10, tm:1.00 },
+  { name:'Trueno',    img:'blue',   body:'#1d6fd4', speed:5, accel:2, steer:2, sm:1.15, am:0.80, tm:0.85 },
+  { name:'Relámpago', img:'yellow', body:'#e09a00', speed:2, accel:5, steer:3, sm:0.88, am:1.35, tm:1.00 },
+  { name:'Tornado',   img:'green',  body:'#2a9d5c', speed:3, accel:3, steer:5, sm:1.00, am:1.00, tm:1.40 },
+  { name:'Cometa',    img:'purple', body:'#8e44ad', speed:4, accel:4, steer:3, sm:1.08, am:1.15, tm:1.00 },
 ];
 const KART_IMGS = {};
 for(const k in KART_IMG_SRC){ const im = new Image(); im.src = KART_IMG_SRC[k]; KART_IMGS[k] = im; }
