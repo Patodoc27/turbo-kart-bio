@@ -230,6 +230,40 @@
   .brief-tips { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:10px; }
   .brief-tips span { background:#eef6fd; border-radius:12px; padding:5px 11px; font-size:13px; font-weight:600; color:#33586f; }
   #confetti-canvas { position:fixed; inset:0; pointer-events:none; z-index:60; display:none; }
+
+  /* ---------- certificado ---------- */
+  #overlay-cert { flex-direction:column; z-index:55; }
+  .cert-frame { background:#fdf6e3; border:10px solid #d4a017; border-radius:18px; box-shadow:0 24px 70px rgba(0,0,0,.55), inset 0 0 0 4px #fff6d5;
+    width:min(640px,94vw); margin:auto; text-align:center; overflow:hidden; animation:cardIn .45s; }
+  .cert-checker { height:16px; background:repeating-conic-gradient(#16324f 0 25%, #fdf6e3 0 50%) 0 0/32px 16px; }
+  .cert-inner { padding:18px 30px 22px; }
+  .cert-kicker { font-size:14px; font-weight:700; letter-spacing:4px; color:#b8860b; }
+  .cert-game { font-size:clamp(30px,5vw,44px); font-weight:700; color:#16324f; letter-spacing:2px; margin:4px 0 8px;
+    text-shadow:2px 2px 0 #ffd23f; }
+  .cert-line { font-size:15px; font-weight:500; color:#5a7690; line-height:1.4; }
+  .cert-line b { color:#16324f; }
+  .cert-name { font-size:clamp(26px,4.5vw,38px); font-weight:700; color:#b8401c; margin:6px 0 0; border-bottom:3px double #d4a017;
+    display:inline-block; padding:0 18px 4px; }
+  .cert-sec { font-size:15px; font-weight:700; color:#33586f; margin-top:4px; }
+  .cert-kart { display:flex; align-items:center; justify-content:center; gap:12px; margin:10px 0 4px; }
+  .cert-kart img { width:110px; height:auto; filter:drop-shadow(0 6px 8px rgba(0,0,0,.25)); }
+  .cert-kart span { font-size:22px; font-weight:700; color:#16324f; }
+  .cert-meta { display:flex; justify-content:space-between; align-items:center; margin:12px 8px 0; font-size:14px; font-weight:700; color:#5a4310; }
+  .cert-meta #cert-stars { color:#b8860b; font-size:18px; }
+  .cert-sign { margin-top:10px; font-size:18px; font-weight:700; color:#16324f; font-style:italic; border-top:2px solid #d4a017;
+    display:inline-block; padding:8px 34px 0; }
+  .cert-sign span { display:block; font-size:11px; font-weight:600; font-style:normal; letter-spacing:3px; color:#5a7690; }
+  #overlay-cert .btn-row button { font-size:19px; font-weight:700; color:#fff; border:none; border-radius:40px; padding:11px 30px;
+    background:linear-gradient(180deg,#ffc233,#fb8500); box-shadow:0 5px 0 #b25d00; }
+  #overlay-cert .btn-row button:active { transform:translateY(3px); box-shadow:0 2px 0 #b25d00; }
+  #overlay-cert .btn-row button.secondary { background:linear-gradient(180deg,#5fa8e8,#2b6fd4); box-shadow:0 5px 0 #1a3f78; }
+  .cert-btn { background:linear-gradient(180deg,#ffd23f,#fb8500) !important; color:#5a4310 !important; border-color:rgba(255,255,255,.7) !important; }
+  @media print {
+    body * { display:none !important; }
+    #overlay-cert, #overlay-cert * { display:block !important; }
+    #overlay-cert { position:static; background:#fff; padding:0; }
+    #overlay-cert .btn-row { display:none !important; }
+  }
   #countdown { position:fixed; inset:0; z-index:45; display:none; align-items:center; justify-content:center;
     font-size:clamp(80px,18vw,200px); font-weight:700; color:#ffd23f; pointer-events:none; text-shadow:0 8px 0 #d62828, 0 16px 40px rgba(0,0,0,.6); }
 
@@ -327,6 +361,7 @@
   <div class="map-head">
     <div class="pilot-chip"><img id="map-kart" alt="" draggable="false"><div><span id="map-pilot"></span><small id="map-section"></small></div></div>
     <div class="total-chip" id="map-total">★ 0 / 36</div>
+    <button class="ghost-btn cert-btn" id="btn-map-cert" style="display:none">🏆 Mi certificado</button>
     <button class="ghost-btn" id="btn-change">Cambiar piloto</button>
   </div>
   <div class="map-title">Elige una isla</div>
@@ -455,9 +490,31 @@
     <p id="is-name" style="font-size:18px;font-weight:700;color:#1d4e89;"></p>
     <p id="is-text"></p>
     <div class="words-got" id="is-words"></div>
-    <p id="is-all" style="display:none;margin-top:10px;font-size:18px;font-weight:700;color:#e08a00;">¡Completaste las cuatro islas! Eres campeón o campeona de Turbo Kart Bio.</p>
+    <div id="is-all" style="display:none;margin-top:10px;">
+      <p style="font-size:18px;font-weight:700;color:#e08a00;">¡Completaste las cuatro islas! Eres campeón o campeona de Turbo Kart Bio.</p>
+      <div class="btn-row"><button id="btn-is-cert">🏆 Ver mi certificado</button></div>
+    </div>
     <div class="btn-row"><button id="btn-is-map">Volver al mapa ▶</button></div>
   </div>
+</div>
+
+<div class="overlay" id="overlay-cert">
+  <div class="cert-frame">
+    <div class="cert-checker"></div>
+    <div class="cert-inner">
+      <div class="cert-kicker">✦ CERTIFICADO DE LOGRO ✦</div>
+      <h2 class="cert-game">TURBO KART BIO</h2>
+      <div class="cert-line">Se otorga el presente certificado a</div>
+      <div class="cert-name" id="cert-name">Nombre Apellido</div>
+      <div class="cert-sec" id="cert-sec">1° A</div>
+      <div class="cert-line">por completar las <b>4 islas</b> y las <b>12 pistas</b> del desafío<br>con el kart</div>
+      <div class="cert-kart"><img id="cert-kart-img" alt="" draggable="false"><span id="cert-kart-name"></span></div>
+      <div class="cert-meta"><span id="cert-stars">★ 36 / 36</span><span id="cert-date"></span></div>
+      <div class="cert-sign">Turbo Kart Bio<span>Campeonato NOA</span></div>
+    </div>
+    <div class="cert-checker"></div>
+  </div>
+  <div class="btn-row"><button class="secondary" id="btn-cert-print">🖨 Imprimir</button><button id="btn-cert-map">Volver al mapa ▶</button></div>
 </div>
 
 <script>
@@ -1939,7 +1996,7 @@ function flushAttempts(){
 }
 
 /* ---------- overlays ---------- */
-const OVERLAYS = ['overlay-brief','overlay-level','overlay-fail','overlay-pause','overlay-island'];
+const OVERLAYS = ['overlay-brief','overlay-level','overlay-fail','overlay-pause','overlay-island','overlay-cert'];
 function showOverlay(id){
   OVERLAYS.forEach(o => document.getElementById(o).style.display = o === id ? 'flex' : 'none');
   if(id && isl) setIslandColors(document.getElementById(id), isl);
@@ -2068,6 +2125,19 @@ function showIsland(){
   showOverlay('overlay-island');
   sfxFanfare(); startConfetti();
 }
+
+function allDone(){ return ISLANDS.every((_,k)=>islandDone(k)); }
+function totalStars(){ return ISLANDS.reduce((a,_,i)=>a+[0,1,2].reduce((b,l)=>b+bestStars(i,l),0),0); }
+function showCert(){
+  document.getElementById('cert-name').textContent = `${save.name} ${save.surname}`;
+  document.getElementById('cert-sec').textContent = save.section;
+  document.getElementById('cert-kart-img').src = KART_IMG_SRC[kartDef.img];
+  document.getElementById('cert-kart-name').textContent = kartDef.name;
+  document.getElementById('cert-stars').textContent = `★ ${totalStars()} / 36`;
+  document.getElementById('cert-date').textContent = new Date().toLocaleDateString('es-AR', {day:'numeric', month:'long', year:'numeric'});
+  showOverlay('overlay-cert');
+  sfxFanfare(); startConfetti();
+}
 function goMap(){
   if(inRace && levelTime > 1) logAttempt('Abandonó', 0, levelScore);
   running = false; inRace = false; paused = false;
@@ -2100,6 +2170,10 @@ document.getElementById('btn-pause-go').onclick = resumeGame;
 document.getElementById('btn-pause-map').onclick = goMap;
 document.getElementById('btn-pause-restart').onclick = ()=>{ if(levelTime > 1) logAttempt('Abandonó', 0, levelScore); score = Math.max(0, score - levelScore); paused = false; startLevel(); };
 document.getElementById('btn-is-map').onclick = goMap;
+document.getElementById('btn-is-cert').onclick = showCert;
+document.getElementById('btn-cert-map').onclick = goMap;
+document.getElementById('btn-map-cert').onclick = showCert;
+document.getElementById('btn-cert-print').onclick = ()=> window.print();
 document.addEventListener('visibilitychange', ()=>{ if(document.hidden) pauseGame(); });
 
 /* ---------- bucle principal ---------- */
@@ -2233,6 +2307,7 @@ function renderMap(){
     grid.appendChild(card);
   });
   document.getElementById('map-total').textContent = `★ ${total} / 36`;
+  document.getElementById('btn-map-cert').style.display = ISLANDS.every((_,k)=>islandDone(k)) ? '' : 'none';
 }
 
 // reintenta enviar partidas que quedaron pendientes de una sesión anterior
