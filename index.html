@@ -1977,7 +1977,8 @@ function logAttempt(resultado, stars, puntos){
     nombre: save.name, apellido: save.surname, seccion: save.section,
     isla: isl.tag + ' · ' + isl.name, pista: (lvlIdx+1) + ' · ' + level.name,
     resultado: resultado, estrellas: stars|0,
-    correctos: goodCount, incorrectos: badCount, sin_atrapar: missCount, puntos: puntos|0 };
+    correctos: goodCount, incorrectos: badCount, sin_atrapar: missCount, puntos: puntos|0,
+    tiempo: Math.round(levelTime) };
   (save.pending = save.pending || []).push(row);
   if(save.pending.length > 60) save.pending.splice(0, save.pending.length - 60);
   persist();
